@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.amityas.org/CustomerOrder/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CustomerOrder"
+	targetNamespace="http://www.amityas.org/CustomerOrder/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.amityas.org/CustomerOrder/">
+
+
+			
+				<xsd:complexType name="Order">
+					<xsd:sequence>
+						<xsd:element name="orderId" type="xsd:integer" />
+						<xsd:element name="products" maxOccurs="unbounded"
+							type="tns:Product" />
+					</xsd:sequence>
+				</xsd:complexType>
+		
+
+			
+				<xsd:complexType name="Product">
+					<xsd:sequence>
+						<xsd:element name="productId" type="xsd:integer" />
+						<xsd:element name="productName" type="xsd:string" />
+						<xsd:element name="productDesc" type="xsd:string" />
+
+					</xsd:sequence>
+				</xsd:complexType>
+	
+				<xsd:complexType name="GetOrdersRequest">
+					<xsd:sequence>
+						<xsd:element name="customerId" type="xsd:integer" />
+					</xsd:sequence>
+				</xsd:complexType>
+				
+				<xsd:complexType name="GetOrdersResponse">
+					<xsd:sequence>
+						<xsd:element name="orders" maxOccurs="unbounded" type="tns:Order" />
+					</xsd:sequence>
+				</xsd:complexType>
+				
+				<xsd:complexType name="CreateOrderRequest">
+					<xsd:sequence>
+						<xsd:element name="customerId" type="xsd:integer" />
+						<xsd:element name="order" type="tns:Order" />
+					</xsd:sequence>
+				</xsd:complexType>
+				
+				<xsd:complexType name="CreateOrderResponse">
+					<xsd:sequence>
+						<xsd:element name="success"  type="xsd:boolean" />
+					</xsd:sequence>
+				</xsd:complexType>
+				
+				<xsd:complexType name="DeleteOrderRequest">
+					<xsd:sequence>
+						<xsd:element name="customerId" type="xsd:integer" />
+						
+					</xsd:sequence>
+				</xsd:complexType>
+				
+				<xsd:complexType name="DeleteOrderResponse">
+					<xsd:sequence>
+						<xsd:element name="success"  type="xsd:boolean" />
+					</xsd:sequence>
+				</xsd:complexType>
+				
+				
+
+				<xsd:element name="getOrdersRequest" type="tns:GetOrdersRequest"/>
+				<xsd:element name="getOrdersResponse" type="tns:GetOrdersResponse"/>
+				
+				<xsd:element name="createOrderRequest" type="tns:CreateOrderRequest"/>
+				<xsd:element name="createOrderResponse" type="tns:CreateOrderResponse"/>
+				
+				<xsd:element name="deleteOrderRequest" type="tns:DeleteOrderRequest"/>
+				<xsd:element name="deleteOrderResponse" type="tns:DeleteOrderResponse"/>
+			
+		</xsd:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="GetOrdersRequest">
+		<wsdl:part element="tns:getOrdersRequest" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="GetOrderResponse">
+		<wsdl:part element="tns:getOrdersResponse" name="parameters" />
+	</wsdl:message>
+	
+	<wsdl:message name="CreateOrdersRequest">
+		<wsdl:part element="tns:createOrderRequest" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="CreateOrderResponse">
+		<wsdl:part element="tns:createOrderResponse" name="parameters" />
+	</wsdl:message>
+	
+	<wsdl:message name="DeleteOrderRequest">
+		<wsdl:part element="tns:deleteOrderRequest" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="DeleteOrderResponse">
+		<wsdl:part element="tns:deleteOrderResponse" name="parameters" />
+	</wsdl:message>
+	
+	
+	
+	
+	<wsdl:portType name="CustomerOrderPortType">
+		<wsdl:operation name="getOrders">
+			<wsdl:input message="tns:GetOrdersRequest" />
+			<wsdl:output message="tns:GetOrderResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="createOrder">
+			<wsdl:input message="tns:CreateOrdersRequest" />
+			<wsdl:output message="tns:CreateOrderResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="deleteOrder">
+			<wsdl:input message="tns:DeleteOrderRequest" />
+			<wsdl:output message="tns:DeleteOrderResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CustomerOrderSOAP" type="tns:CustomerOrderPortType">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getOrders">
+			<soap:operation soapAction="http://www.amityas.org/CustomerOrder/getOrder" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="createOrder">
+			<soap:operation soapAction="http://www.amityas.org/CustomerOrder/createOrder" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteOrder">
+			<soap:operation soapAction="http://www.amityas.org/CustomerOrder/deleteOrder" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CustomerOrder">
+		<wsdl:port binding="tns:CustomerOrderSOAP" name="CustomerOrderSOAP">
+			<soap:address location="http://localhost:8080/CustomerOrder" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
